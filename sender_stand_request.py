@@ -3,18 +3,17 @@ import requests
 import configuration
 import data
 
-# Определение функции post_new_user для отправки POST-запроса на создание нового пользователя
 def post_new_user(body):
     return requests.post(configuration.URL_SERVICE + configuration.CREATE_USER_PATH,
                          json=body,
                          headers=data.headers)
 
-response = post_new_user(data.user_body)
-print(response.status_code)
-print(response.json())
-auth_Token = response.json()["authToken"]
+def get_new_user_token():
+    response=post_new_user(data.user_body)
+    auth_token = response.json()["authToken"]
+    return auth_token
 
-def post_new_client_kit(kit_body):
+def post_new_client_kit(kit_body, auth_Token):
     return requests.post(configuration.URL_SERVICE + configuration.KITS_PATH,
                          json=kit_body,
                          headers={"Content-Type": "application/json",
