@@ -11,7 +11,12 @@ def post_new_user(body):
 
 response = post_new_user(data.user_body)
 print(response.status_code)
-def get_users_table():
-    return requests.get(configuration.URL_SERVICE + configuration.USERS_TABLE_PATH )
-response = get_users_table()
-print(response.status_code)
+print(response.json())
+auth_Token = response.json()["authToken"]
+
+def post_new_client_kit(kit_body):
+    return requests.post(configuration.URL_SERVICE + configuration.KITS_PATH,
+                         json=kit_body,
+                         headers={"Content-Type": "application/json",
+                                 "Authorization": "Bearer" + auth_Token
+                                 })
