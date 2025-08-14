@@ -19,4 +19,5 @@ def get_new_user_token():
 def post_new_client_kit(kit_body, authToken):
     return requests.post(configuration.URL_SERVICE + configuration.KITS_PATH,
                          json=kit_body,
-                         headers=data.headers)
+                         headers={"Content-Type": "applocation/json",
+                                  "Autorization": "Berer" + authToken})
